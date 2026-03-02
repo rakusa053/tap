@@ -53,10 +53,13 @@ h1 {
     transition: transform 0.1s ease;
     color: #333;
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 10px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.goal-text {
+    font-size: 2rem;
+    color: #666;
 }
 
 .counter-display.pop {
