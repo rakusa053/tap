@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./count.json:/usr/src/app/count.json
+      - ./public:/usr/src/app/public
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      # 本番でHTTPS化する場合は 443:443 も追加します
+      # - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # HTTPS用の証明書をマウントする場合はここに追加します
+    depends_on:
+      - app
+    restart: always

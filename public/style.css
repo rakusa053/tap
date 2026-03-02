@@ -1,0 +1,118 @@
+:root {
+  --primary-color: #4facfe;
+  --secondary-color: #00f2fe;
+  --text-color: #333;
+  --bg-color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #111;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #111;
+    padding-bottom: 0.5rem;
+}
+
+.counter-display {
+    font-size: 5rem;
+    font-weight: 700;
+    min-width: 200px;
+    transition: transform 0.1s ease;
+    color: #333;
+}
+
+.counter-display.pop {
+    transform: scale(1.1);
+}
+
+.tap-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f4f4f4;
+    background-color: #222;
+    border: 3px solid #111;
+    border-radius: 8px; /* クラシックな少し角張った形状 */
+    padding: 1rem 3.5rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px #111; /* ソリッドな影（レトロ・クラシック風） */
+    transition: all 0.1s ease;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tap-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tap-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #111;
+    background-color: #333;
+}
+
+.tap-button:hover::after {
+  opacity: 1;
+}
+
+.tap-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #111;
+}
+
+/* クリック時の波紋エフェクト */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-anim 600ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
