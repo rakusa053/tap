@@ -53,7 +53,10 @@ h1 {
     transition: transform 0.1s ease;
     color: #333;
     margin-bottom: 0.5rem;
-    text-align: left;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
 }
 
 .counter-display.pop {
