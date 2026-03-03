@@ -36,7 +36,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%; /* progress bar と同じ幅にする */
+    max-width: 600px;
 }
 
 .top-nav-btn {
@@ -53,11 +54,11 @@ body {
 }
 
 #shop-btn {
-    left: 10px; /* 左端から少し離す */
+    left: 0; /* widthの左端ぴったり */
 }
 
 #achievements-btn {
-    right: 10px; /* 右端から少し離す */
+    right: 0; /* widthの右端ぴったり */
 }
 
 .top-nav-btn:active {
