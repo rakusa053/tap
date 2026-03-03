@@ -28,7 +28,6 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    margin-top: -8vh; /* 画面全体を少し上へずらす */
 }
 
 .header-container {
@@ -145,6 +144,7 @@ h1 {
 .global-meter {
     width: 80%;
     max-width: 600px; /* Global is larger */
+    margin-top: -3rem; /* バーやボタン群全体を少し上へずらす */
 }
 
 .personal-meter {
