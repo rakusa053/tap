@@ -32,18 +32,15 @@ body {
 }
 
 .header-container {
-    position: relative; /* 子要素の絶対配置の基準になる */
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3等分 */
     align-items: center;
-    width: 80%; /* progress bar と同じ幅にする */
-    max-width: 600px;
+    width: 100%; /* 画面全体の幅を使うか、お好みで80%などに */
+    max-width: 800px; /* メーターより少し広めに取る */
+    margin-bottom: 1rem;
 }
 
 .top-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     font-size: 1.5rem;
     font-weight: 700;
     cursor: pointer;
@@ -54,11 +51,11 @@ body {
 }
 
 #shop-btn {
-    left: 0; /* widthの左端ぴったり */
+    text-align: center; /* 左側のブロックの中央 */
 }
 
 #achievements-btn {
-    right: 0; /* widthの右端ぴったり */
+    text-align: center; /* 右側のブロックの中央 */
 }
 
 .top-nav-btn:active {
@@ -75,6 +72,8 @@ h1 {
     border-bottom: 2px solid var(--theme-color);
     padding-bottom: 0.5rem;
     transition: color 0.3s, border-color 0.3s;
+    text-align: center; /* 真ん中のブロックの中央 */
+    justify-self: center; /* グリッドセル内で中央配置 */
 }
 
 .meter-container {
