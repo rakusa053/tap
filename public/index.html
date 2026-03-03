@@ -40,13 +40,25 @@
               </div>
           </div>
       </div>
-      <div class="meter-container">
+      <div class="meter-container global-meter">
+        <div class="counter-label">GLOBAL</div>
         <div class="counter-display">
-          <span id="counter">0</span><span class="goal-text"> / <span id="goal">1K</span></span>
-          <div id="hover-exact" class="hover-exact">0</div>
+          <span id="global-counter">0</span><span class="goal-text"> / <span id="global-goal">1K</span></span>
+          <div id="hover-exact-global" class="hover-exact">0</div>
         </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-fill"></div>
+        <div class="progress-bar-bg global-bg">
+          <div class="progress-bar-fill" id="global-progress-fill"></div>
+        </div>
+      </div>
+      
+      <div class="meter-container personal-meter">
+        <div class="counter-label">PERSONAL</div>
+        <div class="counter-display">
+          <span id="personal-counter">0</span><span class="goal-text"> / <span id="personal-goal">10</span></span>
+          <div id="hover-exact-personal" class="hover-exact">0</div>
+        </div>
+        <div class="progress-bar-bg personal-bg">
+          <div class="progress-bar-fill" id="personal-progress-fill"></div>
         </div>
       </div>
       <button id="tap-btn" class="tap-button">TAP</button>

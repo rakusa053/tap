@@ -1,11 +1,16 @@
 const socket = io();
 
-const counterDisplay = document.getElementById('counter');
-const goalDisplay = document.getElementById('goal');
-const hoverExact = document.getElementById('hover-exact');
+const globalCounterDisplay = document.getElementById('global-counter');
+const globalGoalDisplay = document.getElementById('global-goal');
+const hoverExactGlobal = document.getElementById('hover-exact-global');
+const globalProgressFill = document.getElementById('global-progress-fill');
+
+const personalCounterDisplay = document.getElementById('personal-counter');
+const personalGoalDisplay = document.getElementById('personal-goal');
+const hoverExactPersonal = document.getElementById('hover-exact-personal');
+const personalProgressFill = document.getElementById('personal-progress-fill');
+
 const tapBtn = document.getElementById('tap-btn');
-const counterContainer = document.querySelector('.counter-display');
-const progressFill = document.getElementById('progress-fill');
 const powerDisplay = document.getElementById('power-display');
 
 // The shop and achievement icons are directly visible now, 
@@ -38,7 +43,8 @@ function getPower(count) {
 
 let currentPower = Math.min(getPower(personalCount), 7);
 let currentGlobalCount = 0;
-let currentGoal = 1000;
+let currentGlobalGoal = 1000;
+let currentPersonalGoal = 10;
 
 function formatNumber(num) {
     if (num >= 1e12) return (num / 1e12).toFixed(1).replace(/\.0$/, '') + 'T';
@@ -72,33 +78,62 @@ function updateTheme() {
     }
 }
 
-const updateUI = (count) => {
+const updateGlobalUI = (count) => {
     currentGlobalCount = count;
-    counterDisplay.textContent = formatNumber(count);
-    hoverExact.textContent = count.toLocaleString();
+    globalCounterDisplay.textContent = formatNumber(count);
+    hoverExactGlobal.textContent = count.toLocaleString();
     
     const newGoal = getGoal(count);
     
-    if (newGoal > currentGoal) {
-        // Celebration!
-        progressFill.classList.add('celebrate');
-        setTimeout(() => progressFill.classList.remove('celebrate'), 500);
-        currentGoal = newGoal;
-    } else if (count === 0 && newGoal !== currentGoal) {
-        currentGoal = getGoal(count);
+    if (newGoal > currentGlobalGoal) {
+        globalProgressFill.classList.add('celebrate');
+        setTimeout(() => globalProgressFill.classList.remove('celebrate'), 500);
+        currentGlobalGoal = newGoal;
+    } else if (count === 0 && newGoal !== currentGlobalGoal) {
+        currentGlobalGoal = getGoal(count);
     }
     
-    goalDisplay.textContent = formatNumber(currentGoal);
+    globalGoalDisplay.textContent = formatNumber(currentGlobalGoal);
     
-    const prevGoal = getPrevGoal(currentGoal);
-    const percentage = Math.max(0, Math.min(((count - prevGoal) / (currentGoal - prevGoal)) * 100, 100));
-    progressFill.style.width = percentage + '%';
+    const prevGoal = getPrevGoal(currentGlobalGoal);
+    const percentage = Math.max(0, Math.min(((count - prevGoal) / (currentGlobalGoal - prevGoal)) * 100, 100));
+    globalProgressFill.style.width = percentage + '%';
 };
 
-const animateCounter = () => {
-    counterContainer.classList.add('pop');
+const updatePersonalUI = (pCount) => {
+    personalCounterDisplay.textContent = formatNumber(pCount);
+    hoverExactPersonal.textContent = pCount.toLocaleString();
+    
+    // Personal goals go up in powers of 10 but start at 10: 10, 100, 1000...
+    const getPersonalGoal = (c) => {
+        if (c < 10) return 10;
+        let exp = Math.floor(Math.log10(c)); 
+        return Math.pow(10, exp) * 10;
+    };
+    
+    const newGoal = getPersonalGoal(pCount);
+    
+    if (newGoal > currentPersonalGoal) {
+        personalProgressFill.classList.add('celebrate');
+        setTimeout(() => personalProgressFill.classList.remove('celebrate'), 500);
+        currentPersonalGoal = newGoal;
+    } else if (pCount === 0 && newGoal !== currentPersonalGoal) {
+        currentPersonalGoal = getPersonalGoal(pCount);
+    }
+    
+    personalGoalDisplay.textContent = formatNumber(currentPersonalGoal);
+    
+    const getPersonalPrevGoal = (g) => g <= 10 ? 0 : g / 10;
+    const prevGoal = getPersonalPrevGoal(currentPersonalGoal);
+    const percentage = Math.max(0, Math.min(((pCount - prevGoal) / (currentPersonalGoal - prevGoal)) * 100, 100));
+    personalProgressFill.style.width = percentage + '%';
+};
+
+const animateCounter = (el) => {
+    if(!el) return;
+    el.classList.add('pop');
     setTimeout(() => {
-        counterContainer.classList.remove('pop');
+        el.classList.remove('pop');
     }, 100);
 };
 
@@ -107,18 +142,22 @@ socket.on('init', (data) => {
     const count = typeof data === 'object' ? data.globalCount : data;
     
     currentPower = Math.min(getPower(personalCount), 7);
-    currentGoal = getGoal(count);
+    currentGlobalGoal = getGoal(count);
     updateTheme();
-    updateUI(count);
+    updateGlobalUI(count);
+    updatePersonalUI(personalCount);
 });
 
 socket.on('update', (count) => {
-    updateUI(count);
-    animateCounter();
+    updateGlobalUI(count);
+    animateCounter(globalCounterDisplay.parentElement);
 });
 
 socket.on('personal_update', (pCount) => {
     personalCount = pCount;
+    updatePersonalUI(personalCount);
+    animateCounter(personalCounterDisplay.parentElement);
+    
     const newPower = getPower(personalCount);
     if (newPower > currentPower) {
         currentPower = newPower;
@@ -134,8 +173,8 @@ tapBtn.addEventListener('click', function(e) {
     // サーバー側で計算されるため、ローカルでの計算・保存は撤去
     socket.emit('click', currentPower);
 
-
-    animateCounter();
+    animateCounter(globalCounterDisplay.parentElement);
+    animateCounter(personalCounterDisplay.parentElement);
 
     // 波紋エフェクト
     const rect = e.target.getBoundingClientRect();
