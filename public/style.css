@@ -28,15 +28,14 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    width: 100%;
 }
 
 .header-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* 3等分 */
     align-items: center;
-    width: 100%; /* 画面全体の幅を使うか、お好みで80%などに */
-    max-width: 800px; /* メーターより少し広めに取る */
+    width: 200%; /* バーと同じ幅 */
+    max-width: 1500px; /* バーと同じ最大幅 */
     margin-bottom: 1rem;
 }
 
@@ -50,16 +49,71 @@ body {
     letter-spacing: 1px;
 }
 
-#shop-btn {
-    text-align: center; /* 左側のブロックの中央 */
+#shop-wrapper {
+    text-align: center;
+    position: relative;
 }
 
-#achievements-btn {
-    text-align: center; /* 右側のブロックの中央 */
+#achievements-wrapper {
+    text-align: center;
+    position: relative;
+}
+
+.dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 2px solid var(--box-shadow-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    width: 320px;
+    margin-top: 10px;
+}
+
+.dropdown-panel.hidden {
+    display: none;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.grid-item {
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+
+.grid-item:hover {
+    background: #eee;
+}
+
+.grid-item.active {
+    border-color: var(--theme-color);
+    color: var(--theme-color);
+    background: #fff;
 }
 
 .top-nav-btn:active {
-    transform: translateY(-50%) scale(0.9);
+    transform: scale(0.9);
 }
 
 h1 {
@@ -77,8 +131,8 @@ h1 {
 }
 
 .meter-container {
-    width: 80%;
-    max-width: 600px;
+    width: 70%;
+    max-width: 250px;
     margin-bottom: 1rem;
 }
 
