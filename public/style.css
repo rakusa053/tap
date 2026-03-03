@@ -32,16 +32,18 @@ body {
 }
 
 .header-container {
+    position: relative; /* 子要素の絶対配置の基準になる */
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     width: 100%;
-    margin-top: -2rem; /* 少し上に上げる */
 }
 
 .top-nav-btn {
-    font-size: 1.2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
     font-weight: 700;
     cursor: pointer;
     color: var(--theme-color);
@@ -50,8 +52,16 @@ body {
     letter-spacing: 1px;
 }
 
+#shop-btn {
+    left: 10px; /* 左端から少し離す */
+}
+
+#achievements-btn {
+    right: 10px; /* 右端から少し離す */
+}
+
 .top-nav-btn:active {
-    transform: scale(0.9);
+    transform: translateY(-50%) scale(0.9);
 }
 
 h1 {
