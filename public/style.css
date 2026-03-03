@@ -144,7 +144,7 @@ h1 {
 .global-meter {
     width: 80%;
     max-width: 600px; /* Global is larger */
-    margin-top: -4.5rem; /* バーやボタン群全体をもう少し上へずらす */
+    margin-top: -6rem; /* さらに上へずらす */
 }
 
 .personal-meter {
