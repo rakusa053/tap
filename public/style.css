@@ -141,10 +141,17 @@ h1 {
     margin-bottom: 0.5rem;
 }
 
+.game-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-6rem); /* レイアウトの高さを変えずに視覚的に上へ移動 */
+}
+
 .global-meter {
     width: 80%;
     max-width: 600px; /* Global is larger */
-    margin-top: -6rem; /* さらに上へずらす */
 }
 
 .personal-meter {
