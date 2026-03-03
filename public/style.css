@@ -58,25 +58,26 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 12px;
 }
 
 .grid-item {
     border: 2px solid #ccc;
-    border-radius: 6px;
-    font-size: 1.5rem;
+    border-radius: 8px;
+    font-size: 2.5rem;
     background: #f9f9f9;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, transform 0.1s;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    width: 40px;
+    height: 70px;
+    width: 70px;
     position: relative;
     user-select: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .grid-item:hover {
