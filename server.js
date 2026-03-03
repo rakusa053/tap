@@ -51,7 +51,9 @@ const MAX_CLICKS_PER_SEC = 50; // 連打ツール対応のため少し緩和
 const RATE_LIMIT_WINDOW = 1000; // 1秒(ms)
 
 io.on('connection', (socket) => {
-    const clientIp = socket.handshake.address || socket.handshake.headers['x-forwarded-for'] || 'unknown';
+    // Nginxを使っているため、X-Forwarded-Forを優先して実際のIPを取得する
+    const forwarded = socket.handshake.headers['x-forwarded-for'];
+    const clientIp = (forwarded ? forwarded.split(',')[0] : socket.handshake.address) || 'unknown';
 
     // クライアントの現在の累計クリック数を取得
     const personalCount = serverData.personal[clientIp] || 0;
