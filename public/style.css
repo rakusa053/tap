@@ -49,71 +49,73 @@ body {
     letter-spacing: 1px;
 }
 
-#shop-wrapper {
-    text-align: center;
-    position: relative;
-}
-
-#achievements-wrapper {
-    text-align: center;
-    position: relative;
-}
-
-.dropdown-panel {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    border: 2px solid var(--box-shadow-color);
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 100;
-    width: 320px;
-    margin-top: 10px;
-}
-
-.dropdown-panel.hidden {
-    display: none;
+.nav-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 .grid-item {
     border: 2px solid #ccc;
     border-radius: 6px;
-    padding: 10px 5px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #555;
+    font-size: 1.5rem;
     background: #f9f9f9;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    transition: background 0.2s, border-color 0.2s, transform 0.1s;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 70px;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    user-select: none;
 }
 
 .grid-item:hover {
     background: #eee;
+    transform: scale(1.1);
+}
+
+.grid-item:active {
+    transform: scale(0.95);
 }
 
 .grid-item.active {
     border-color: var(--theme-color);
-    color: var(--theme-color);
     background: #fff;
 }
 
-.top-nav-btn:active {
-    transform: scale(0.9);
+/* Tooltip styles */
+.grid-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--theme-color);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.grid-item:hover::after {
+    opacity: 1;
 }
 
 h1 {

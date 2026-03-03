@@ -8,21 +8,8 @@ const counterContainer = document.querySelector('.counter-display');
 const progressFill = document.getElementById('progress-fill');
 const powerDisplay = document.getElementById('power-display');
 
-const shopBtn = document.getElementById('shop-btn');
-const shopPanel = document.getElementById('shop-panel');
-const achievementsBtn = document.getElementById('achievements-btn');
-const achievementsPanel = document.getElementById('achievements-panel');
-
-// Toggle Panels
-shopBtn.addEventListener('click', () => {
-    shopPanel.classList.toggle('hidden');
-    achievementsPanel.classList.add('hidden'); // Close the other
-});
-
-achievementsBtn.addEventListener('click', () => {
-    achievementsPanel.classList.toggle('hidden');
-    shopPanel.classList.add('hidden'); // Close the other
-});
+// The shop and achievement icons are directly visible now, 
+// hover tooltips are handled purely via CSS data-tooltip.
 
 // Local user stats (Now synchronized with Server via IP)
 let personalCount = 0;
