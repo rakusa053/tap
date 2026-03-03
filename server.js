@@ -38,7 +38,7 @@ const saveCount = () => {
 
 // レート制限用データストア: Map<IP, timestamps[]>
 const rateLimiter = new Map();
-const MAX_CLICKS_PER_SEC = 10; // 1秒間に許可する最大クリック数
+const MAX_CLICKS_PER_SEC = 50; // 連打ツール対応のため少し緩和
 const RATE_LIMIT_WINDOW = 1000; // 1秒(ms)
 
 io.on('connection', (socket) => {
@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
         rateLimiter.set(clientIp, timestamps);
 
         let power = parseInt(reqPower, 10);
-        if (isNaN(power) || power < 1 || power > 50) power = 1;
+        if (isNaN(power) || power < 1 || power > 50) power = 1; // 不正な値は1にする
 
         currentCount += power;
         saveCount();
