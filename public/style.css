@@ -28,17 +28,42 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    margin-top: -2rem; /* 少し上に上げる */
+}
+
+.top-nav-btn {
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--theme-color);
+    text-transform: uppercase;
+    transition: transform 0.1s, color 0.3s;
+    letter-spacing: 1px;
+}
+
+.top-nav-btn:active {
+    transform: scale(0.9);
 }
 
 h1 {
     font-size: 3rem;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #111;
+    color: var(--theme-color);
     text-transform: uppercase;
     margin-bottom: 0rem;
-    border-bottom: 2px solid #111;
+    border-bottom: 2px solid var(--theme-color);
     padding-bottom: 0.5rem;
+    transition: color 0.3s, border-color 0.3s;
 }
 
 .meter-container {
