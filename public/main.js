@@ -8,8 +8,8 @@ const counterContainer = document.querySelector('.counter-display');
 const progressFill = document.getElementById('progress-fill');
 const powerDisplay = document.getElementById('power-display');
 
-// Local user stats
-let personalCount = parseInt(localStorage.getItem('tap_personalCount') || '0', 10);
+// Local user stats (Now synchronized with Server via IP)
+let personalCount = 0;
 
 // Colors for power levels
 const powerColors = {
@@ -99,7 +99,11 @@ const animateCounter = () => {
     }, 100);
 };
 
-socket.on('init', (count) => {
+socket.on('init', (data) => {
+    typeof data === 'object' ? personalCount = data.personalCount : personalCount = 0;
+    const count = typeof data === 'object' ? data.globalCount : data;
+    
+    currentPower = Math.min(getPower(personalCount), 7);
     currentGoal = getGoal(count);
     updateTheme();
     updateUI(count);
@@ -110,14 +114,8 @@ socket.on('update', (count) => {
     animateCounter();
 });
 
-tapBtn.addEventListener('click', function(e) {
-    // サーバーへクリックイベント送信
-    socket.emit('click', currentPower);
-    
-    // 個人カウントの更新とローカル保存
-    personalCount += currentPower;
-    localStorage.setItem('tap_personalCount', personalCount);
-    
+socket.on('personal_update', (pCount) => {
+    personalCount = pCount;
     const newPower = getPower(personalCount);
     if (newPower > currentPower) {
         currentPower = newPower;
@@ -126,6 +124,13 @@ tapBtn.addEventListener('click', function(e) {
         powerDisplay.classList.add('pop');
         setTimeout(() => powerDisplay.classList.remove('pop'), 200);
     }
+});
+
+tapBtn.addEventListener('click', function(e) {
+    // サーバーへクリックイベント送信
+    // サーバー側で計算されるため、ローカルでの計算・保存は撤去
+    socket.emit('click', currentPower);
+
 
     animateCounter();
 

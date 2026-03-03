@@ -15,13 +15,22 @@ const DATA_FILE = path.join(__dirname, "count.json");
 app.use(express.static(path.join(__dirname, "public")));
 
 // カウントの読み込み
-let currentCount = 0;
+let serverData = { count: 0, personal: {} };
 try {
     if (fs.existsSync(DATA_FILE)) {
-        const data = fs.readFileSync(DATA_FILE, 'utf8');
-        currentCount = JSON.parse(data).count || 0;
+        const fileContent = fs.readFileSync(DATA_FILE, 'utf8');
+        try {
+            const parsed = JSON.parse(fileContent);
+            if (typeof parsed.count !== 'undefined') {
+                serverData = { count: parsed.count, personal: parsed.personal || {} };
+            } else {
+                serverData.count = parsed || 0; // 古い形式の互換性
+            }
+        } catch(e) {
+            serverData.count = 0;
+        }
     } else {
-        fs.writeFileSync(DATA_FILE, JSON.stringify({ count: 0 }));
+        fs.writeFileSync(DATA_FILE, JSON.stringify(serverData));
     }
 } catch (error) {
     console.error('Error reading count.json:', error);
@@ -30,9 +39,9 @@ try {
 // カウントの保存関数
 const saveCount = () => {
     try {
-        fs.writeFileSync(DATA_FILE, JSON.stringify({ count: currentCount }));
+        fs.writeFileSync(DATA_FILE, JSON.stringify(serverData));
     } catch (error) {
-        console.error('Error saving count:', error);
+        console.error('Error saving count.json:', error);
     }
 };
 
@@ -42,10 +51,13 @@ const MAX_CLICKS_PER_SEC = 50; // 連打ツール対応のため少し緩和
 const RATE_LIMIT_WINDOW = 1000; // 1秒(ms)
 
 io.on('connection', (socket) => {
-    const clientIp = socket.handshake.address || socket.handshake.headers['x-forwarded-for'];
+    const clientIp = socket.handshake.address || socket.handshake.headers['x-forwarded-for'] || 'unknown';
 
-    // 接続時に現在のカウントを送信
-    socket.emit('init', currentCount);
+    // クライアントの現在の累計クリック数を取得
+    const personalCount = serverData.personal[clientIp] || 0;
+
+    // 接続時に現在のカウントと個人の累計を送信
+    socket.emit('init', { globalCount: serverData.count, personalCount: personalCount });
 
     // クリックイベントの受信
     socket.on('click', (reqPower) => {
@@ -64,11 +76,17 @@ io.on('connection', (socket) => {
         rateLimiter.set(clientIp, timestamps);
 
         let power = parseInt(reqPower, 10);
-        if (isNaN(power) || power < 1 || power > 50) power = 1; // 不正な値は1にする
+        if (isNaN(power) || power < 1 || power > 50) power = 1;
 
-        currentCount += power;
+        // 全体カウントと個人カウントを両方増やす
+        serverData.count += power;
+        serverData.personal[clientIp] = (serverData.personal[clientIp] || 0) + power;
+        
         saveCount();
-        io.emit('update', currentCount);
+        
+        // 全員に新しいカウントを送信 (個人データはクリックした本人にだけ返す)
+        io.emit('update', serverData.count);
+        socket.emit('personal_update', serverData.personal[clientIp]);
     });
 });
 
