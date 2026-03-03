@@ -1,33 +1,33 @@
 :root {
-  --primary-color: #4facfe;
-  --secondary-color: #00f2fe;
-  --text-color: #333;
-  --bg-color: #ffffff;
+    --text-color: #333;
+    --bg-color: #ffffff;
+    --theme-color: #222;
+    --box-shadow-color: #111;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
 h1 {
@@ -36,7 +36,7 @@ h1 {
     letter-spacing: 2px;
     color: #111;
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
     border-bottom: 2px solid #111;
     padding-bottom: 0.5rem;
 }
@@ -44,22 +44,41 @@ h1 {
 .meter-container {
     width: 80%;
     max-width: 600px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .counter-display {
+    position: relative;
     font-size: 3rem;
     font-weight: 700;
     transition: transform 0.1s ease;
-    color: #333;
+    color: var(--theme-color);
     margin-bottom: 0.5rem;
     text-align: center;
     white-space: nowrap;
+    cursor: default;
 }
 
 .goal-text {
     font-size: 2rem;
     color: #666;
+}
+
+.hover-exact {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: #888;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+.counter-display:hover .hover-exact {
+    opacity: 1;
 }
 
 .counter-display.pop {
@@ -69,18 +88,28 @@ h1 {
 .progress-bar-bg {
     width: 100%;
     height: 30px;
-    background-color: #ddd;
+    background-color: #eee;
     border-radius: 15px;
     overflow: hidden;
-    border: 3px solid #111;
+    border: 3px solid var(--box-shadow-color);
     box-shadow: inset 0px 3px 5px rgba(0,0,0,0.1);
+    transition: border-color 0.3s;
 }
 
 .progress-bar-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #ff416c, #ff4b2b);
-    transition: width 0.2s ease-out;
+    background: var(--theme-color);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+}
+
+.progress-bar-fill.celebrate {
+    animation: flash 0.5s ease-out;
+}
+
+@keyframes flash {
+    0% { background: #fff; box-shadow: 0 0 20px #fff; }
+    100% { background: var(--theme-color); }
 }
 
 .tap-button {
@@ -88,13 +117,13 @@ h1 {
     font-size: 1.8rem;
     font-weight: 700;
     color: #f4f4f4;
-    background-color: #222;
-    border: 3px solid #111;
+    background-color: var(--theme-color);
+    border: 3px solid var(--box-shadow-color);
     border-radius: 8px; /* クラシックな少し角張った形状 */
     padding: 1rem 3.5rem;
     cursor: pointer;
-    box-shadow: 4px 4px 0px #111; /* ソリッドな影（レトロ・クラシック風） */
-    transition: all 0.1s ease;
+    box-shadow: 4px 4px 0px var(--box-shadow-color); /* ソリッドな影（レトロ・クラシック風） */
+    transition: all 0.1s ease, background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: hidden;
     outline: none;
@@ -103,46 +132,41 @@ h1 {
     letter-spacing: 1px;
 }
 
-.tap-button::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(45deg);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
 .tap-button:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px #111;
-    background-color: #333;
-}
-
-.tap-button:hover::after {
-  opacity: 1;
+    box-shadow: 6px 6px 0px var(--box-shadow-color);
 }
 
 .tap-button:active {
     transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px #111;
+    box-shadow: 0px 0px 0px var(--box-shadow-color);
+}
+
+.power-display {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--theme-color);
+    margin-top: 0rem;
+    letter-spacing: 1px;
+    transition: color 0.3s, transform 0.1s;
+}
+
+.power-display.pop {
+    transform: scale(1.2);
 }
 
 /* クリック時の波紋エフェクト */
 .ripple {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple-anim 600ms linear;
-  background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-anim 600ms linear;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 @keyframes ripple-anim {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }

@@ -48,16 +48,14 @@ io.on('connection', (socket) => {
     socket.emit('init', currentCount);
 
     // クリックイベントの受信
-    socket.on('click', () => {
+    socket.on('click', (reqPower) => {
         const now = Date.now();
         
         // レート制限のチェック
         let timestamps = rateLimiter.get(clientIp) || [];
-        // 1秒以上古いタイムスタンプを削除
         timestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
         
         if (timestamps.length >= MAX_CLICKS_PER_SEC) {
-            // 制限超過: 無視する (必要ならクライアントに警告を送る)
             rateLimiter.set(clientIp, timestamps);
             return;
         }
@@ -65,9 +63,11 @@ io.on('connection', (socket) => {
         timestamps.push(now);
         rateLimiter.set(clientIp, timestamps);
 
-        currentCount++;
+        let power = parseInt(reqPower, 10);
+        if (isNaN(power) || power < 1 || power > 50) power = 1;
+
+        currentCount += power;
         saveCount();
-        // 全員に新しいカウントを送信
         io.emit('update', currentCount);
     });
 });
