@@ -21,10 +21,45 @@
                   <div class="grid-item icon-btn" data-tooltip="Cost: 10K | +1 Power">🏭</div>
                   <div class="grid-item icon-btn" data-tooltip="Cost: 50K | +1 Power">🔥</div>
                   <div class="grid-item icon-btn" data-tooltip="Cost: 100K | +1 Power">👑</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 500K | +1 Power">💎</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 1M | +1 Power">🛸</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 5M | +1 Power">🧬</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 10M | +1 Power">💊</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 50M | +1 Power">☢️</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 100M | +1 Power">🌌</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 500M | +1 Power">🧠</div>
+                  <div class="grid-item icon-btn" data-tooltip="Cost: 1B | +1 Power">👁️</div>
               </div>
           </div>
           
-          <h1>Only Tap</h1>
+          <div class="center-col">
+              <h1>Only Tap</h1>
+              <div class="game-area">
+                <div class="meter-container global-meter">
+                  <div class="counter-label">GLOBAL</div>
+                  <div class="counter-display">
+                    <span id="global-counter">0</span><span class="goal-text"> / <span id="global-goal">1K</span></span>
+                    <div id="hover-exact-global" class="hover-exact">0</div>
+                  </div>
+                  <div class="progress-bar-bg global-bg">
+                    <div class="progress-bar-fill" id="global-progress-fill"></div>
+                  </div>
+                </div>
+                
+                <div class="meter-container personal-meter">
+                  <div class="counter-label">PERSONAL</div>
+                  <div class="counter-display">
+                    <span id="personal-counter">0</span><span class="goal-text"> / <span id="personal-goal">10</span></span>
+                    <div id="hover-exact-personal" class="hover-exact">0</div>
+                  </div>
+                  <div class="progress-bar-bg personal-bg">
+                    <div class="progress-bar-fill" id="personal-progress-fill"></div>
+                  </div>
+                </div>
+                <button id="tap-btn" class="tap-button">TAP</button>
+                <div class="power-display" id="power-display">+1 click</div>
+              </div>
+          </div>
           
           <div class="nav-wrapper" id="achievements-wrapper">
               <div class="top-nav-btn" id="achievements-btn">Achievement</div>
@@ -37,33 +72,17 @@
                   <div class="grid-item icon-btn" data-tooltip="10K Clicks | +1 Power">🥈</div>
                   <div class="grid-item icon-btn" data-tooltip="50K Clicks | +1 Power">🥇</div>
                   <div class="grid-item icon-btn" data-tooltip="100K Clicks | +1 Power">🏆</div>
+                  <div class="grid-item icon-btn" data-tooltip="500K Clicks | +1 Power">🏵️</div>
+                  <div class="grid-item icon-btn" data-tooltip="1M Clicks | +1 Power">🎖️</div>
+                  <div class="grid-item icon-btn" data-tooltip="5M Clicks | +1 Power">🌠</div>
+                  <div class="grid-item icon-btn" data-tooltip="10M Clicks | +1 Power">🌟</div>
+                  <div class="grid-item icon-btn" data-tooltip="50M Clicks | +1 Power">💫</div>
+                  <div class="grid-item icon-btn" data-tooltip="100M Clicks | +1 Power">👑</div>
+                  <div class="grid-item icon-btn" data-tooltip="500M Clicks | +1 Power">🪐</div>
+                  <div class="grid-item icon-btn" data-tooltip="1B Clicks | +1 Power">♾️</div>
               </div>
           </div>
       </div>
-      <div class="game-area">
-        <div class="meter-container global-meter">
-        <div class="counter-label">GLOBAL</div>
-        <div class="counter-display">
-          <span id="global-counter">0</span><span class="goal-text"> / <span id="global-goal">1K</span></span>
-          <div id="hover-exact-global" class="hover-exact">0</div>
-        </div>
-        <div class="progress-bar-bg global-bg">
-          <div class="progress-bar-fill" id="global-progress-fill"></div>
-        </div>
-      </div>
-      
-      <div class="meter-container personal-meter">
-        <div class="counter-label">PERSONAL</div>
-        <div class="counter-display">
-          <span id="personal-counter">0</span><span class="goal-text"> / <span id="personal-goal">10</span></span>
-          <div id="hover-exact-personal" class="hover-exact">0</div>
-        </div>
-        <div class="progress-bar-bg personal-bg">
-          <div class="progress-bar-fill" id="personal-progress-fill"></div>
-        </div>
-      </div>
-      <button id="tap-btn" class="tap-button">TAP</button>
-      <div class="power-display" id="power-display">+1 click</div>
       </div>
     </div>
 
